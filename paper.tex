@@ -603,6 +603,26 @@ linear-algebra knowledge into a set of inference rules.
 \end{itemize}
 
 \paragraph{Types: Matrix and Term}
+
+\begin{listing}[]
+\begin{center}
+\begin{minipage}[]{0.5\textwidth}
+\begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
+    @\color{mygreen}{\textbf{for}}@ (int a = 0; a < N; ++a)
+      @\color{mygreen}{\textbf{for}}@ (int b = 0; b < M; ++b) 
+        @\color{mygreen}{\textbf{for}}@ (int c = 0; c < N; ++c)
+          @\color{mygreen}{\textbf{for}}@ (int d = 0; d < O; ++d) 
+S1:         C[a][b][c] += A[a][c][d] * B[d][b];
+      }
+\end{minted}
+\end{minipage}
+%\vspace{-0.5em}
+\caption{Contraction abc-acd-db.}
+\label{lst:contraction}
+\end{center}
+\end{listing}
+
+
 \paragraph{Operations}
 \paragraph{Transformations}
 \begin{itemize}
