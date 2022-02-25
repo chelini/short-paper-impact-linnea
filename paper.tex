@@ -554,14 +554,23 @@
 
 \section{Introduction}
 
+A significant part of processor time is spent on mathematical algorithms used
+in simulations, machine learning, communication, signal processing, computer
+vision, and other domains. Both scenarios need fast code. The mathematics used
+in these domains may differ widely. Still, the actual computations often fall
+into the realm of linear algebra, meaning sequences of computations on matrices
+and vectors. Optimizing these sequences of operation thus becomes crucial.
+
+\begin{itemize}
+  \item No idea what is today landscape in optimizing dense-linear algebra.
+\end{itemize}
 
 \begin{figure}
 % Link to figure
 %
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
-\includegraphics[width=\columnwidth]{images/Impact2022.drawio.pdf}
-\caption{Our key idea visualized}
-\grosserf{Replace this figure with your own drawing.}
+\includegraphics[width=0.7\columnwidth]{images/Impact2022.drawio.pdf}
+\caption{The PyLinnea compiler for dense-linear algebra.}
 \end{figure}
 
 ~\\
