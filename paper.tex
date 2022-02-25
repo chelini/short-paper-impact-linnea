@@ -684,6 +684,36 @@ with an optimal parenthesization.
   \item mention the symbolic engine and why peephole opts failed.
 \end{itemize}
 
+\begin{listing}[]
+\begin{center}
+\begin{minipage}[]{0.5\textwidth}
+\begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
+  // initialize matrix A
+  @\color{orange3}{%A}@ = linnea.init [5, 5] : 
+    !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  %Af = linnea.fill(%fc, %A) : 
+    @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  // initialize matrix B
+  %B = linnea.init [5, 5] : 
+    !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  %Bf = linnea.fill(%fc, %B) : 
+    @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  // multiply the two and print the result
+  @\color{orange3}{%0}@ = linnea.equation {
+    @\color{orange3}{%1}@ = linnea.mul @\color{orange3}{%Af}@, @\color{orange3}{%Bf}@ :
+      !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+      !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]> 
+      -> !linnea.term
+    linnea.yield @\color{orange3}{%1}@ : !linnea.term
+  }
+  linnea.print %0 : !linnea.term
+\end{minted}
+\end{minipage}
+  \caption{A Linnea IR representation for a multiplication between two lower triangular matrices.}
+\label{lst:endtoend}
+\end{center}
+\end{listing}
+
 \section{Results}
 \begin{itemize}
   \item chain results intel and amd
