@@ -601,10 +601,16 @@ Central to the design of our dialect is the \texttt{Matrix Attribute} a
 notation mechanism -- inspired from the sparse tensor dialect -- to encode
 compile-time information that defines a given \texttt{Matrix} type. A
 \texttt{Matrix Attribute} is thus a list of non-conflict properties that define
-the underneath algebraic object (i.e., lower or upper triangular). Listing~\ref{lst:attribute}
-shows an attribute to flag an algebraic type as lower triangular.
+the underneath algebraic object (i.e., lower or upper triangular).
+Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
+lower triangular. During bufferization, when the underneath algebraic object is
+materialized using a straightforward \texttt{memref} the attributes dictates
+how the memory is filled (i.e., set to zeros the element below the diagonal for
+an upper triangular matrix). In the future, we would like to depart from
+\texttt{memref} and use more appropriate containers.
 
 \paragraph{Types: Matrix, Term and Identity}
+
 
 \begin{listing}[]
 \begin{center}
@@ -629,6 +635,7 @@ shows an attribute to flag an algebraic type as lower triangular.
 \section{PyLinnea Compiler Usage}
 \begin{itemize}
   \item Show the python frontend
+  \item Show the Linnea IR
   \item How we lower using linnea-compiler
 \end{itemize}
 
@@ -640,7 +647,7 @@ shows an attribute to flag an algebraic type as lower triangular.
 \section{Related Work}
 
 \section{Conclusion}
-\lipsum[1]
+%\lipsum[1]
 
 \ifx\paperversion\paperversioncameraIEEE
 \else
