@@ -637,11 +637,21 @@ optimizations, for example: $A * I = A$ or $I * I = I$.
 \end{listing}
 
 \paragraph{Operations}
-Table shows the operations exposed by the Linnea dialect~\ref{table:operations}.
+
+Table shows the operations exposed by the Linnea
+dialect~\ref{table:operations}. \texttt{Init} and \texttt{Fill} initialize and
+fill an algebraic object, respectively. \texttt{Mul} and \texttt{Add} are
+variadic operations that takes as input an arbitrary numbers of Values of
+Linnea types.  The \texttt{Equation} represents a ``bag'' of Linnea operations
+that together represent a given mathematical expression. We build a symbolic
+representation of the program by walking each Equation starting from the yield
+operation, which gets simplified and rematerialized to new low-level Linnea IR.
+For example, variadic multiplications are  rewritten as binary multiplications
+with an optimal parenthesization. 
 
 \begin{table}
 \begin{center}
-\begin{tabular}{llll}
+\begin{tabular}{ll}
     \toprule
     \footnotesize{Op name}     & \footnotesize{Description} \\ \midrule
     \footnotesize{Init} & \footnotesize{Materialize the algebraic object using a \texttt{memref}} \\
@@ -651,6 +661,7 @@ Table shows the operations exposed by the Linnea dialect~\ref{table:operations}.
     \footnotesize{Equation} & \footnotesize{Represents a linear-algebra equation} \\
     \footnotesize{Add} & \footnotesize{Variadic addition of different algebraic objects} \\
     \rowcolor{aluminium1}
+    \footnotesize{Yield} & \footnotesize{Return the result of an Equation} \\
     \footnotesize{Mul} & \footnotesize{Variadic multiplication of different algebraic objects} \\ \bottomrule
 \end{tabular}
 \end{center}
