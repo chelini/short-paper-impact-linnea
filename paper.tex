@@ -637,6 +637,27 @@ optimizations, for example: $A * I = A$ or $I * I = I$.
 \end{listing}
 
 \paragraph{Operations}
+Table shows the operations exposed by the Linnea dialect~\ref{table:operations}.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{llll}
+    \toprule
+    \footnotesize{Op name}     & \footnotesize{Description} \\ \midrule
+    \footnotesize{Init} & \footnotesize{Materialize the algebraic object using a \texttt{memref}} \\
+    \rowcolor{aluminium1}
+    \footnotesize{Fill} & \footnotesize{Initialize the algebraic object according to its properties}  \\
+    \rowcolor{aluminium1}
+    \footnotesize{Equation} & \footnotesize{Represents a linear-algebra equation} \\
+    \footnotesize{Add} & \footnotesize{Variadic addition of different algebraic objects} \\
+    \rowcolor{aluminium1}
+    \footnotesize{Mul} & \footnotesize{Variadic multiplication of different algebraic objects} \\ \bottomrule
+\end{tabular}
+\end{center}
+\caption{Operations exposed by the Linnea dialect.}
+\label{table:operations}
+\end{table} 
+
 \paragraph{Transformations}
 \begin{itemize}
   \item matrix-chain
