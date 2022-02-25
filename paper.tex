@@ -677,12 +677,38 @@ with an optimal parenthesization.
 \end{itemize}
 
 \section{PyLinnea Compiler Usage}
-\begin{itemize}
-  \item Show the python frontend
-  \item Show the Linnea IR
-  \item How we lower using linnea-compiler
-  \item mention the symbolic engine and why peephole opts failed.
-\end{itemize}
+
+PyLinnea provides users with a convenient Python frontend language to express
+their computation. It does not require any knowledge about the internal
+intermediate representation or the different compiler passes involved in
+lowering a Python specification to binary. For example,
+listing~\ref{lst:python} shows how a user can specify a multiplication between
+two lower triangular matrices. 
+
+\begin{listing}[]
+\begin{center}
+\begin{minipage}[]{0.5\textwidth}
+\begin{minted}[fontsize=\scriptsize, linenos, escapeinside=@@]{cpp}
+  n = 5
+  m = 5
+  Matrix A(n, m) <LowerTriangular>
+  A = 23
+  Matrix B(n, m) <LowerTrinagular>
+  B = 26
+  Matrix C(n, m) <>
+  C = A * B
+  print(C)
+\end{minted}
+\end{minipage}
+  \caption{PyLinnea specification for a triangular matrix multiplication.}
+\label{lst:python}
+\end{center}
+\end{listing}
+
+Behind the scene, PyLinnea lowers the Python specification to the Linnea
+dialect (see Listing~\ref{lst:endtoend}).  Line 3 and 4 map to the
+initialization and fill operations both for the A and B matrix. Line 8 is
+mapped to the \texttt{linnea.equation} operation. 
 
 \begin{listing}[]
 \begin{center}
@@ -722,7 +748,15 @@ with an optimal parenthesization.
 \section{Related Work}
 
 \section{Conclusion}
-%\lipsum[1]
+
+We presented PyLinnea, an end-to-end flow for dense-linear algebra operations
+based on MLIR. Contrary to existing tools, PyLinnea is not limited by the
+rigidity of current BLAS and LAPACK libraries. Still, more research is needed
+to develop a proper code generation infrastructure, and more building blocks
+are needed into the MLIR compiler infrastructure to make PyLinnea scalable and
+flexible. Nevertheless, our research is a small step toward addressing the
+limitation of today's dense-linear algebra optimizer and rethinking their
+optimization flow in a more compiler-structured approach.
 
 \ifx\paperversion\paperversioncameraIEEE
 \else
