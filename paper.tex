@@ -592,7 +592,7 @@ expressed in Python and a more BLAS-like dialect: Linalg.
   @\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@]>
 \end{minted}
 \end{minipage}
-\caption{Lower triangular attribute. Lower triangular also guarantees square.}
+\caption{Linnea attributes attach properties to the underneath algebraic object.}
 \label{lst:attribute}
 \end{center}
 \end{listing}
@@ -606,7 +606,17 @@ shows an attribute to flag an algebraic type as lower triangular.
 
 \paragraph{Types: Matrix, Term and Identity}
 
-
+\begin{listing}[]
+\begin{center}
+\begin{minipage}[]{0.5\textwidth}
+\begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
+  !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+\end{minted}
+\end{minipage}
+  \caption{A type to represent a 5 $\times$ 5 lower-triangular matrix with \texttt{f32} as element type.}
+\label{lst:type}
+\end{center}
+\end{listing}
 
 \paragraph{Operations}
 \paragraph{Transformations}
