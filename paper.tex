@@ -611,6 +611,18 @@ an upper triangular matrix). In the future, we would like to depart from
 
 \paragraph{Types: Matrix, Term and Identity}
 
+Linnea provides three built-in types: Matrix, Term and Identity. Matrix
+represents a specialization of an n-dimensional tensor type that guarantees a
+2-dimensional shape. It comes with an attribute that describes a set of
+non-conflicting properties, a static dimension, and an MLIR built-in type that
+describes each stored element's type (i.e., f32). Listing~\ref{lst:type} shows
+how a 5 $\times$ lower-triangular matrix can be represented. A term type
+represents the result of Linnea \texttt{equationOp}. It is a generic type,
+meaning that it will be replaced by a concrete one (i.e., MatrixType) only
+after the \texttt{equationOp} has been optimized and simplified. Finally, an
+Identity type represents the identity matrix -- a square matrix where all the
+elements on the diagonal are 1. The identity types can unlock some interesting
+optimizations, for example: $A * I = A$ or $I * I = I$.
 
 \begin{listing}[]
 \begin{center}
