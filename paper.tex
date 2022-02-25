@@ -683,7 +683,12 @@ that minimizes the number of scalar multiplications when multiplying a chain of
 matrices. We implement the algorithm described in~\cite{cormen2009introduction}
 and generalize to account for matrix properties as
 in~\cite{barthels2020automatic}. Identity simplification consists of exploiting
-the identity matrix to simplify the computation. For example, $A * I \rightarrow A$. 
+the identity matrix to simplify the computation. For example, $A * I
+\rightarrow A$.  Finally, Linnea's IR makes it possible to annotate matrices
+with properties. But, it is also essential to understand the properties of
+intermediate results as the computation unfold. Thus we introduce a symbolic
+engine and encode a set of inference rules such as $lowerTrinagular(A)
+\rightarrow upperTriangular(A^T)$.
 
 \section{PyLinnea Compiler Usage}
 
