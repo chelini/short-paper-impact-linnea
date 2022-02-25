@@ -670,11 +670,20 @@ with an optimal parenthesization.
 \end{table} 
 
 \paragraph{Transformations}
-\begin{itemize}
-  \item matrix-chain
-  \item identity simplification
-  \item property propagation
-\end{itemize}
+%\begin{itemize}
+%  \item matrix-chain
+%  \item identity simplification
+%  \item property propagation
+%\end{itemize}
+
+Transformations are on their way. Currently, we limit ourselves to three major
+transformations: matrix-chain reordering, identity simplification and
+properties propagation. Matrix chain reordering is an algorithm improvement
+that minimizes the number of scalar multiplications when multiplying a chain of
+matrices. We implement the algorithm described in~\cite{cormen2009introduction}
+and generalize to account for matrix properties as
+in~\cite{barthels2020automatic}. Identity simplification consists of exploiting
+the identity matrix to simplify the computation. For example, $A * I \rightarrow A$. 
 
 \section{PyLinnea Compiler Usage}
 
@@ -779,7 +788,7 @@ optimization flow in a more compiler-structured approach.
 \fi
 
 %% Bibliography
-%\bibliography{bibfile}
+\bibliography{references}
 
 
 %% Appendix
