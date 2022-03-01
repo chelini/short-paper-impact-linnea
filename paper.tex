@@ -587,10 +587,11 @@ We call our tool PyLinnea and it's built on top of MLIR.
 \section{The Linnea Dialect}
 
 Dense linear-algebra support is captured in MLIR by introducing a new Linnea
-Dialect, which provides the attributes, types, operations, and transformations
+Dialect, which provides attributes, types, operations, and transformations
 required to make dense computation as first-class citizens in the compiler IR.
 Linnea forms a bridge between the high-level dense linear-algebra mathematics
-expressed in Python and a more BLAS-like dialect: Linalg.
+expressed in Python DSL and a more BLAS-like dialect: Linalg. From Linalg we lower
+to LLVM IR and then machine code.
 
 \paragraph{Matrix Attribute}
 
@@ -612,7 +613,8 @@ compile-time information that defines a given \texttt{Matrix} type. A
 \texttt{Matrix Attribute} is thus a list of non-conflict properties that define
 the underneath algebraic object (i.e., lower or upper triangular).
 Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
-lower triangular. During bufferization, when the underneath algebraic object is
+lower triangular. During bufferization~\footnote{bufferization: process to
+materialize memref from tensors}, the underneath algebraic object is
 materialized using a straightforward \texttt{memref} the attributes dictates
 how the memory is filled (i.e., set to zeros the element below the diagonal for
 an upper triangular matrix). In the future, we would like to depart from
@@ -625,13 +627,13 @@ represents a specialization of an n-dimensional tensor type that guarantees a
 2-dimensional shape. It comes with an attribute that describes a set of
 non-conflicting properties, a static dimension, and an MLIR built-in type that
 describes each stored element's type (i.e., f32). Listing~\ref{lst:type} shows
-how a 5 $\times$ lower-triangular matrix can be represented. A term type
+how a 5 $\times$ 5 lower-triangular matrix can be represented. A term type
 represents the result of Linnea \texttt{equationOp}. It is a generic type,
-meaning that it will be replaced by a concrete one (i.e., MatrixType) only
-after the \texttt{equationOp} has been optimized and simplified. Finally, an
-Identity type represents the identity matrix -- a square matrix where all the
-elements on the diagonal are 1. The identity types can unlock some interesting
-optimizations, for example: $A * I = A$ or $I * I = I$.
+meaning that it will be replaced by a concrete one (i.e., MatrixType) (only after
+optimization and simplification the result of an \texttt{equationOp} is known).
+Finally, an Identity type represents the identity matrix -- a square matrix
+where all the elements on the diagonal are 1. The identity types can unlock
+some interesting optimizations, for example: $A * I = A$ or $I * I = I$.
 
 \begin{listing}[]
 \begin{center}
@@ -679,34 +681,29 @@ with an optimal parenthesization.
 \end{table} 
 
 \paragraph{Transformations}
-%\begin{itemize}
-%  \item matrix-chain
-%  \item identity simplification
-%  \item property propagation
-%\end{itemize}
 
 Transformations are on their way. Currently, we limit ourselves to three major
 transformations: matrix-chain reordering, identity simplification and
-properties propagation. Matrix chain reordering is an algorithm improvement
+properties propagation. Matrix chain reordering is an algorithmic improvement
 that minimizes the number of scalar multiplications when multiplying a chain of
 matrices. We implement the algorithm described in~\cite{cormen2009introduction}
-and generalize to account for matrix properties as
+and generalize it to account for matrix properties as
 in~\cite{barthels2020automatic}. Identity simplification consists of exploiting
 the identity matrix to simplify the computation. For example, $A * I
 \rightarrow A$.  Finally, Linnea's IR makes it possible to annotate matrices
 with properties. But, it is also essential to understand the properties of
 intermediate results as the computation unfold. Thus we introduce a symbolic
 engine and encode a set of inference rules such as $lowerTrinagular(A)
-\rightarrow upperTriangular(A^T)$.
+\rightarrow upperTriangular(A^T)$. We use the symbolic engine to replace a
+\texttt{TermType} with a concrete type.
 
 \section{PyLinnea Compiler Usage}
 
-PyLinnea provides users with a convenient Python frontend language to express
-their computation. It does not require any knowledge about the internal
-intermediate representation or the different compiler passes involved in
-lowering a Python specification to binary. For example,
-listing~\ref{lst:python} shows how a user can specify a multiplication between
-two lower triangular matrices. 
+PyLinnea provides users with a convenient Python DSL language to express their
+computation. It does not require any knowledge about the internal intermediate
+representation or the different compiler passes involved in lowering a Python
+specification to binary. For example, listing~\ref{lst:python} shows how a user
+can specify a multiplication between two lower triangular matrices. 
 
 \begin{listing}[]
 \begin{center}
@@ -730,8 +727,8 @@ two lower triangular matrices.
 
 Behind the scene, PyLinnea lowers the Python specification to the Linnea
 dialect (see Listing~\ref{lst:endtoend}).  Line 3 and 4 map to the
-initialization and fill operations both for the A and B matrix. Line 8 is
-mapped to the \texttt{linnea.equation} operation. 
+initialization and fill operations both for the A and B matrix. Line 8 maps to
+the \texttt{linnea.equation} operation. 
 
 \begin{listing}[]
 \begin{center}
@@ -778,7 +775,7 @@ rigidity of current BLAS and LAPACK libraries. Still, more research is needed
 to develop a proper code generation infrastructure, and more building blocks
 are needed into the MLIR compiler infrastructure to make PyLinnea scalable and
 flexible. Nevertheless, our research is a small step toward addressing the
-limitation of today's dense-linear algebra optimizer and rethinking their
+limitation of today's dense-linear algebra optimizers and rethinking their
 optimization flow in a more compiler-structured approach.
 
 \ifx\paperversion\paperversioncameraIEEE
