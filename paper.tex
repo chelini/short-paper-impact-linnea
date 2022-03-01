@@ -610,7 +610,7 @@ to LLVM IR and then machine code.
 Central to the design of our dialect is the \texttt{Matrix Attribute} a
 notation mechanism -- inspired from the Sparse Tensor Dialect -- to encode
 compile-time information that defines a given \texttt{Matrix} type. A
-\texttt{Matrix Attribute} is thus a list of non-conflict properties that define
+\texttt{Matrix Attribute} is thus a list of non-conflicting properties that define
 the underneath algebraic object (i.e., lower or upper triangular).
 Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
 lower triangular. During bufferization~\footnote{bufferization: process to
