@@ -610,12 +610,12 @@ to LLVM IR and then machine code.
 Central to the design of our dialect is the \texttt{Matrix Attribute} a
 notation mechanism -- inspired from the Sparse Tensor Dialect -- to encode
 compile-time information that defines a given \texttt{Matrix} type. A
-\texttt{Matrix Attribute} is thus a list of non-conflicting properties that define
-the underneath algebraic object (i.e., lower or upper triangular).
+\texttt{Matrix Attribute} is thus a list of non-conflicting properties that
+define the underneath algebraic object (i.e., lower or upper triangular).
 Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
-lower triangular. During bufferization~\footnote{bufferization: process to
-materialize memref from tensors}, the underneath algebraic object is
-materialized using a straightforward \texttt{memref} the attributes dictates
+lower triangular. During bufferization~\footnote{bufferization materializes
+memref (i.e., malloc) from tensors}, the underneath algebraic object is
+materialized using a straightforward \texttt{memref}. The attributes dictates
 how the memory is filled (i.e., set to zeros the element below the diagonal for
 an upper triangular matrix). In the future, we would like to depart from
 \texttt{memref} and use more appropriate containers.
@@ -682,7 +682,7 @@ with an optimal parenthesization.
 
 \paragraph{Transformations}
 
-Transformations are on their way. Currently, we limit ourselves to three major
+Currently, we limit ourselves to three major
 transformations: matrix-chain reordering, identity simplification and
 properties propagation. Matrix chain reordering is an algorithmic improvement
 that minimizes the number of scalar multiplications when multiplying a chain of
@@ -765,7 +765,7 @@ the \texttt{linnea.equation} operation.
   \item chain results intel and amd
 \end{itemize}
 
-\section{Related Work}
+%\section{Related Work}
 
 \section{Conclusion}
 
