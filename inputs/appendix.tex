@@ -1,0 +1,182 @@
+% LaTeX template for Artifact Evaluation V20190108
+%
+% Prepared by 
+% * Grigori Fursin (cTuning foundation, France) 2014-2019
+% * Bruce Childers (University of Pittsburgh, USA) 2014
+%
+% See example of this Artifact Appendix in
+%  * SC'17 paper: https://dl.acm.org/citation.cfm?id=3126948
+%  * CGO'17 paper: https://www.cl.cam.ac.uk/~sa614/papers/Software-Prefetching-CGO2017.pdf
+%  * ACM ReQuEST-ASPLOS'18 paper: https://dl.acm.org/citation.cfm?doid=3229762.3229763
+%
+% (C)opyright 2014-2019
+%
+% CC BY 4.0 license
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% When adding this appendix to your paper, 
+% please remove above part
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Artifact Appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Abstract}
+
+The artifact's goal is to show how Multi-level Tactics (MLT) lifts
+general-purpose languages to higher-abstractions to enable effective
+domain-specific compilation via progressive lowering. The artifact consists of
+a docker container with accompanying scripts to replicate figure 8, 9 and Table
+2. The docker container is the only piece needed to run all the experiments. Scripts
+to generate the figures and the table come with the docker.
+
+\subsection{Artifact Check-List (Meta-information)}
+
+{\small
+\begin{itemize}
+  \item {\bf Algorithm: } Multi-level Tactics a declarative approach for progressive
+  raising implemented on top of the MLIR framework.
+  \item {\bf Program: }Polybench/C 4.2.1 beta and collected on previous studies on tensor
+  contractions. Besides, we consider a 2-D convolution. For Polybench/C 4.2.1 we use a modified version
+  where each kernel has been loop distributed and translated into the Affine dialect
+  in MLIR. All the benchmarks used come with the MLT repository \url{https://github.com/LoopTactics/mlir} (cgo branch).
+  \item {\bf Compilation: }Any C++11-compatible compiler to bootstrap LLVM/MLIR.
+  %\item {\bf Transformations: }
+  %\item {\bf Binary: }
+  \item {\bf Data set: }LARGE DATASET predefined in Polybench/C 4.2.1.
+  \item {\bf Run-time environment: } Any Unix system supported by LLVM.
+  \item {\bf Hardware: }Any platform supported by LLVM.
+  %\item {\bf Run-time state: }
+  %\item {\bf Execution: }
+  %\item {\bf Metrics: GFLOP/s and seconds.}
+  \item {\bf Output: }The result are PDF files replicating Figures 8, 9 and Table 2. The scripts are already in the docker container. Figure 8 and 9 express results using GFLOP/s while Table 2 using seconds. Intermediate files are also generated and are named result\_X.txt. All the result\_X.txt files contain results expressed in seconds.
+  %\item {\bf Experiments: }
+  \item {\bf How much disk space required (approximately)?:} The docker is 7GB, 15GB of disk space should be enough.
+  \item {\bf How much time is needed to prepare workflow (approximately)?: }Mainly the time to build MLT (more than 20 minutes).
+  \item {\bf How much time is needed to complete experiments (approximately)?: }20/25 minutes.
+  \item {\bf Publicly available?: }Yes, via Github and Dockerhub.
+  %\item {\bf Code licenses (if publicly available)?: }
+  %\item {\bf Data licenses (if publicly available)?: }
+  %\item {\bf Workflow framework used?: }
+  %\item {\bf Archived (provide DOI)?: }
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Description}
+
+\subsubsection{How Delivered} 
+
+\begin{itemize} 
+\item We deliver the artifact via docker. Available at:
+\url{https://hub.docker.com/r/lchelini/cgo}
+
+\item MLT and MLT's TDL DSL are available at:
+\url{https://github.com/LoopTactics/mlir} and
+\url{https://github.com/LoopTactics/TacticsDSL}
+
+\item A presentation of MLT at the MLIR Open Design Meeting is available
+\href{https://drive.google.com/file/d/1mfvAiJck4WDDcSPaWbc3D_Dvh86pp3MD/edit}{here}
+
+\end{itemize}
+
+\subsubsection{Hardware Dependencies}
+
+Any platform supported by LLVM, see
+\url{https://llvm.org/docs/GettingStarted.html#hardware}
+
+\subsubsection{Software Dependencies}
+
+The docker container has all the dependencies, which are:
+
+\begin{itemize}
+\item All requirements needed to compile LLVM/MLIR see
+  \url{https://llvm.org/docs/GettingStarted.html#software}
+\item MKL-DNNL available at \url{https://github.com/chelini/mkl-dnn.git}
+\item MKL libraries
+\end{itemize}
+
+\noindent For the MLT's TDL DSL we suggest using llvm-9.0, that can be installed
+using \texttt{sudo apt-get install llvm-9-dev} on your machine. No need to install
+it in the provided docker container.
+
+%\subsubsection{Data sets}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Installation}
+
+%In the docker container to bootstrap MLT and the TDL DSL run \texttt{build.sh}.
+%The script will pull the repositories, and compile the two projects. No
+%installation required.
+No installation required.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experiment Workflow}
+The docker container comes with three files:
+\begin{itemize}
+\item experiment5.1.sh to reproduce Figure 8
+\item experiment5.2.sh to reproduce Figure 9
+\item experiment5.2.time.sh to reproduce the overhead introduce by MLT
+\item experiment5.3.sh to reproduce Table 2
+\end{itemize}
+
+Steps:
+\begin{itemize}
+  \item \texttt{ \$ docker pull lchelini/cgo }
+  \item \texttt{ \$ docker run -it lchelini/cgo }
+  \item \texttt{ \$ ./build.sh }
+  \item \texttt{ \$ ./experiment5.1.sh } 
+  \item \texttt{ \$ ./experiment5.2.sh }
+  \item \texttt{ \$ ./experiment5.2.time.sh } 
+  \item \texttt{ \$ ./experiment5.3.sh } 
+\end{itemize}
+After running \texttt{./experiment5.X.sh} a \texttt{main.pdf} with results can
+be found in \texttt{llvm-project/mlir/benchmark\_section5.X}.  To open the pdf
+file, copy it outside the container using \texttt{docker cp} command, see
+\url{https://docs.docker.com/engine/reference/commandline/cp/}. The script
+\texttt{ ./experiment5.2.time.sh } print on stdout, no file are generated.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Evaluation and Expected Result}
+
+In experiment 5.1, we evaluate MLT's reliability by considering different
+flavours of GEMMs written in different styles but semantically equivalent.  We
+expect to miss a raising opportunity only for the \texttt{Darknet} benchmark as
+we do not emit matchers for linearized access patterns, nor do we provide a
+delinearization pass.
+
+In experiment 5.2, we demonstrate how lifting to higher abstractions (i.e.,
+\texttt{MLT-Linalg} or \texttt{MLT-Blas}) allows us to get better performance
+than \texttt{Clang -O3}. We expect \texttt{MLT Linalg} and \texttt{MLT Blas} to
+reach higher GFLOP/s than the baseline \texttt{Clang -O3}. Besides, we provide
+also another baseline: \texttt{Pluto}. We expect \texttt{Pluto} to be better
+than \texttt{Clang -O3} but less effective (or comparable) to \texttt{MLT
+Linalg}.  We expect \texttt{Pluto} to be less effective than \texttt{MLT BLAS}.
+Note that \texttt{Pluto-best} is not available as it relies on expensive
+autotuning and takes days to converge. 
+
+In experiment 5.3, we show a case for a more progressive raising by
+implementing the matrix-chain reordering transformation. We expect \texttt{Time
+IP} $>$ \texttt{Time OP}. \texttt{IP} is the time for the matrix chain
+without reordering, while \texttt{OP} is the time of the reordered chain.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Experiment customization}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Notes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Methodology}
+
+%Submission, reviewing and badging methodology:
+
+%\begin{itemize}
+%  \item \url{http://cTuning.org/ae/submission-20190109.html}
+%  \item \url{http://cTuning.org/ae/reviewing-20190109.html}
+%  \item \url{https://www.acm.org/publications/policies/artifact-review-badging}
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% When adding this appendix to your paper, 
+% please remove below part
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

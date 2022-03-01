@@ -561,28 +561,20 @@ in these domains may differ widely. Still, the actual computations often fall
 into the realm of linear algebra, meaning sequences of computations on matrices
 and vectors. Optimizing these sequences of operation thus becomes crucial.
 
-\begin{itemize}
-  \item No idea what is today landscape in optimizing dense-linear algebra.
-\end{itemize}
-
 \begin{figure}
 % Link to figure
 %
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
-\includegraphics[width=0.7\columnwidth]{images/Impact2022.drawio.pdf}
+\includegraphics[width=0.6\columnwidth]{images/Impact2022.drawio.pdf}
 \caption{The PyLinnea compiler for dense-linear algebra.}
 \end{figure}
 
-~\\
 Our contributions are:
-
 \begin{itemize}
 	\item An IR representation to model linear-algebra operations, types and properties.
 	\item A lowering path from such representation to LLVM IR.
   \item A python frontend to express linear algebra problems.
 \end{itemize}
-
-We call our tool PyLinnea and it's built on top of MLIR.
 
 \section{The Linnea Dialect}
 
@@ -761,9 +753,52 @@ the \texttt{linnea.equation} operation.
 \end{listing}
 
 \section{Results}
-\begin{itemize}
-  \item chain results intel and amd
-\end{itemize}
+
+\iffalse
+\begin{table*}
+\caption{Multi-level Tactics enables the matrix-chain multiplication optimization at Linalg level by providing a raising path from source code written in C.}
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllll}
+    \toprule
+    \footnotesize{N} &
+    \footnotesize{Matrix Dimensions} &
+    \footnotesize{Initial Parenthesization (IP)} &
+    \footnotesize{Optimal Parenthesization (OP)} &
+    \footnotesize{Time IP} &
+    \footnotesize{Time OP} &
+    \footnotesize{Speedup} \\ \midrule
+
+    \footnotesize{4} &
+    \footnotesize{800 1100 900 1200 100} &
+    \footnotesize{$(((A_1 \times A_2) \times A_3) \times A_4)$} &
+    \footnotesize{$(A_1 \times (A_2 \times (A_3 \times A_4)))$} &
+    \footnotesize{1.289 s} &
+    \footnotesize{0.212 s} &
+    \footnotesize{6.08X} \\
+
+    \footnotesize{5} &
+    \footnotesize{1000 2000 900 1500 600 800} &
+    \footnotesize{$((((A_1 \times A_2) \times A_3) \times A_4) \times A_5)$} &
+    \footnotesize{$((A_1 \times ( A_2 \times ( A_3 \times A_4))) \times A_5)$} &
+    \footnotesize{5.850 s} &
+    \footnotesize{2.567 s} &
+    \footnotesize{2.27X} \\
+
+    \footnotesize{6} &
+    \footnotesize{1500 400 2000 2200 600 1400 1000} &
+    \footnotesize{$(((((A_1 \times A_2) \times A_3) \times A_4) \times A_5) \times A_6)$} &
+    \footnotesize{$(A_1 \times ((((A_2 \times A_3) \times A_4) \times A_5) \times A_6))$} &
+    \footnotesize{28.490 s} &
+    \footnotesize{7.762 s} &
+    \footnotesize{3.67X} \\ \bottomrule
+
+\end{tabular}
+}
+\end{center}
+\label{table::param_chain}
+\end{table*}
+\fi 
 
 %\section{Related Work}
 
@@ -801,163 +836,8 @@ optimization flow in a more compiler-structured approach.
 %% Bibliography
 \bibliography{references}
 
-
-%% Appendix
-\newpage
-\appendix
-\begin{draftonly}
-\section{Formatting and Writing Guidelines}
-
-These formatting guidelines aim to standardize our writing. They ensure that
-papers with multiple authors have a consistent look and that commonly occurring
-items are formatted in ways that are known to work well.
-
-\subsection{Figures}
-
-\paragraph{Referencing Figures} When referencing figures from the text we
-ensure the following:
-\begin{description}
-      \item [All figures are referenced] A paper with un-referenced figures
-	      appears incomplete.
-      \item [References to figures are brief and easy to skip]~\\
-                We minimize the number of words needed to refer to a figure. Reducing
-                the number of non-information-carrying words directly increases
-		the density of interesting content. When skipping references
-		becomes easy, reading quickly while ignoring figures remains a
-		smooth experience. The best and briefest reference to a figure
-		is a link in parenthesis that is added after the subject
-		representing the content depicted in a figure:\\
-		{\color{pairedTwoDarkBlue}\textit{Figure
-		X shows the design of A, which consists of ...}}\\
-		$\to$ {\color{pairedFourDarkGreen}
-		\textit{The design of A (Figure X) consists of ...}}
-      \item [The text is always self-contained without figures] ~\\ The reader
-                should be able to read the text without ever looking at any
-                figure. They should still understand the text and get the key
-		message of each figure directly from the text. By not forcing
-		the reader to analyze a figure while reading, we increase
-		readability as the reader can continue reading without having
-		to skip between text and figures. Such writing style also helps
-		to guide the thoughts of the reader, who can (for a moment)
-		trust our summary of the figure and does not need to develop
-		their own interpretation on-the-fly, a task which often yields
-		results that do not fit the flow of our exposition. Readers
-		typically only feel that their reading is interrupted if there
-		is no explanation of a figure at all. Hence, we do not need to
-		discuss all details of a figure, but half a sentence that explains the
-		core idea is typically sufficient for a reader to continue
-		reading.  By making
-		our text self-contained even when ignoring figures the reader
-		experiences a smooth and uninterrupted reading experience.\\
-		{\color{pairedTwoDarkBlue}
-		\textit{The speedups are presented in Figure X. < a new topic> }}\\
-		$\to$ {\color{pairedFourDarkGreen}\textit{Our approach outperforms the state of the art
-		XXX-library (Figure 3) demonstrating more than 4x speedup on
-		test case 1 and 2 and a geometric mean speedup of 1.5x over all
-		20 test cases.}}
-\end{description}
-We reference figures in text using
-\texttt{\symbol{92}autoref\{fig:speedup\}} for a figure with label
-\texttt{fig:speedup}.  The use of autoref ensures that all references
-to figures are formatted consistently, e.g. as \autoref{fig:speedup}.
-
-\paragraph{Color Scheme} 
-
-In Figures we use a color scheme that is print-friendly and also visible
-with red-green blindness. The following colors are all print-friendly
-and red-green save when only using Color 1-4:
-
-\medskip
-{
-	\small
-\newcolumntype{a}{>{\columncolor{pairedOneLightBlue}}c}
-\newcolumntype{b}{>{\columncolor{pairedTwoDarkBlue}}c}
-\newcolumntype{d}{>{\columncolor{pairedThreeLightGreen}}c}
-\newcolumntype{e}{>{\columncolor{pairedFourDarkGreen}}c}
-\newcolumntype{f}{>{\columncolor{pairedFiveLightRed}}c}
-\newcolumntype{g}{>{\columncolor{pairedSixDarkRed}}c}
-
-\begin{tabular}{a b d e f g}
-Color 1 & Color 2 & Color 3 & Color 4 & Color 5 & Color 6\\
-\#a6cee3 & \#1f78b4 & \#b2df8a & \#33a02c & \#fb9a99 & \#e31a1c
-\end{tabular}
-}
-
-We de-emphasize components in figures by using additionally two shades of gray.
-Especially in complex figures, it is often helpful to de-emphasize visual
-elements that we want to represent but that should not be the focus of a
-reader's attention.
-
-\medskip
-{
-	\small
-\newcolumntype{h}{>{\columncolor{pairedNegOneLightGray}}c}
-\newcolumntype{i}{>{\columncolor{pairedNegTwoDarkGray}}c}
-
-\begin{tabular}{h i}
-Color -1 & Color -2\\
-\#cacaca & \#827b7b\\
-\end{tabular}
-}
-
-Single-color graphs are plotted in Color 1 - Light Blue.
-
-\paragraph{Labels in Figures}
-Complex diagrams often benefit from labels inside the diagrams. We suggest to
-use a filled circle (e.g, in light blue) to highlight these numbers and use
-these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
-
-\subsubsection{Plots} We use matplotlib to create performance
-plots such as \autoref{fig:speedup}. We use the following
-formatting guidelines:
-\begin{itemize}
-  \item Use a vertical y-label to make it easier to read.
-  \item Remove top and right frames to reduce visual noise
-	and allow the reader to focus on the data in the
-	figure.
-  \item Provide the concrete data at the top of each bar.
-\end{itemize}
-
-\noindent
-We also suggest to follow these technical remarks:
-\begin{itemize}
-  \item Create pdf plots and do not use bitmap formats (e.g., png) to
-	ensure high quality when zooming in.
-  \item Avoid Type-3 bitmap fonts by
-	setting fonttype to 42.
-\end{itemize}
-
-\begin{figure}
-\includegraphics[width=\columnwidth]{plots/speedup}
-\caption{Improved running speed after 4 weeks of training.
-}
-\label{fig:speedup}
-\end{figure}
-
-\subsubsection{Listings} We aim to use minted to create listings as much as
-possible, as this allows us to edit code quickly. We use syntax highlighting
-to make the parts of the code that matter most stand out. Hence, we keep
-most code black, comments gray, and highlight just the MLIR operands that
-we care about most.
-
-\begin{listing}
-% We cannot put '{' on a line after % in draftonly mode, as the hack we used to
-% not include the draft section will interpret the listing as normal
-% latex where '%' is a comment and {} need to match, which they will
-% not if only one is commented.
-\begin{mlir}
-// This is a comment
-def @foo(%0 : !dialect.type)
-{
-  %a = dialect.op(%0) : !dialect.type // $\color{black}\circled{a}$
-}
-\end{mlir}
-\caption{A simple MLIR code example with markers. Markers can also be placed in
-	captions and refer to labels, e.g. \circled[lst:example]{a}.}
-\label{lst:example}
-\end{listing}
-
-\end{draftonly}
-
+%\appendix
+%\newpage
+%\input{inputs/appendix.tex}
 
 \end{document}
