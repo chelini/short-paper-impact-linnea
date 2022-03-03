@@ -561,6 +561,9 @@ in these domains may differ widely. Still, the actual computations often fall
 into the realm of linear algebra, meaning sequences of computations on matrices
 and vectors. Optimizing these sequences of operation thus becomes crucial.
 
+This paper proposes an optimization approach based on the MLIR compiler
+infrastructure. Specifically, our contributions are:
+
 \begin{figure}
 % Link to figure
 %
@@ -569,7 +572,6 @@ and vectors. Optimizing these sequences of operation thus becomes crucial.
 \caption{The PyLinnea compiler for dense-linear algebra.}
 \end{figure}
 
-Our contributions are:
 \begin{itemize}
 	\item An IR representation to model linear-algebra operations, types and properties.
 	\item A lowering from such representation to LLVM IR.
