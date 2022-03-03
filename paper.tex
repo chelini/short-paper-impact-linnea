@@ -582,7 +582,7 @@ Dense linear-algebra support is captured in MLIR by introducing a new Linnea
 Dialect, which provides attributes, types, operations, and transformations
 required to make dense computation as first-class citizens in the compiler IR.
 Linnea forms a bridge between the high-level dense linear-algebra mathematics
-expressed in Python DSL and a more BLAS-like dialect: Linalg. From Linalg we lower
+expressed in a Python DSL and a more BLAS-like dialect: Linalg. From Linalg we lower
 to LLVM IR and then machine code.
 
 \paragraph{Matrix Attribute}
@@ -599,15 +599,15 @@ to LLVM IR and then machine code.
 \end{center}
 \end{listing}
 
-Central to the design of our dialect is the \texttt{Matrix Attribute} a
+Central to the design of our dialect is the \texttt{Matrix} attribute a
 notation mechanism -- inspired from the Sparse Tensor Dialect -- to encode
 compile-time information that defines a given \texttt{Matrix} type. A
-\texttt{Matrix Attribute} is thus a list of non-conflicting properties that
+\texttt{Matrix} attribute is thus a list of non-conflicting properties that
 define the underneath algebraic object (i.e., lower or upper triangular).
 Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
 lower triangular. During bufferization~\footnote{bufferization materializes
 memref (i.e., malloc) from tensors}, the underneath algebraic object is
-materialized using a straightforward \texttt{memref}. The attributes dictates
+materialized using a straightforward \texttt{memref} where attributes dictates
 how the memory is filled (i.e., set to zeros the element below the diagonal for
 an upper triangular matrix). In the future, we would like to depart from
 \texttt{memref} and use more appropriate containers.
@@ -620,12 +620,14 @@ represents a specialization of an n-dimensional tensor type that guarantees a
 non-conflicting properties, a static dimension, and an MLIR built-in type that
 describes each stored element's type (i.e., f32). Listing~\ref{lst:type} shows
 how a 5 $\times$ 5 lower-triangular matrix can be represented. A term type
-represents the result of Linnea \texttt{equationOp}. It is a generic type,
-meaning that it will be replaced by a concrete one (i.e., MatrixType) (only after
-optimization and simplification the result of an \texttt{equationOp} is known).
-Finally, an Identity type represents the identity matrix -- a square matrix
-where all the elements on the diagonal are 1. The identity types can unlock
-some interesting optimizations, for example: $A * I = A$ or $I * I = I$.
+represents the result of Linnea \texttt{equationOp}. It is a placeholder type,
+meaning that it will be replaced by a concrete one (i.e., \texttt{MatrixType}).
+In fact, only after optimization and simplification the result of an
+\texttt{equationOp} is known and thus the placeholder types can be swapped with
+a concrete one. Finally, an Identity type represents the identity matrix -- a
+square matrix where all the elements on the diagonal are 1. The identity types
+can unlock some interesting optimizations, for example: $A * I = A$ or $I * I =
+I$.
 
 \begin{listing}[]
 \begin{center}
@@ -647,10 +649,10 @@ fill an algebraic object, respectively. \texttt{Mul} and \texttt{Add} are
 variadic operations that takes as input an arbitrary numbers of Values of
 Linnea types.  The \texttt{Equation} represents a ``bag'' of Linnea operations
 that together represent a given mathematical expression. We build a symbolic
-representation of the program by walking each Equation starting from the yield
-operation, which gets simplified and rematerialized to new low-level Linnea IR.
-For example, variadic multiplications are  rewritten as binary multiplications
-with an optimal parenthesization. 
+representation of the program by walking each equation starting from the yield
+operation. An equation gets simplified and rematerialized to new low-level
+Linnea IR.  For example, variadic multiplications are  rewritten as binary
+multiplications with an optimal parenthesization. 
 
 \begin{table}
 \begin{center}
@@ -704,9 +706,7 @@ can specify a multiplication between two lower triangular matrices.
   n = 5
   m = 5
   Matrix A(n, m) <LowerTriangular>
-  A = 23
   Matrix B(n, m) <LowerTrinagular>
-  B = 26
   Matrix C(n, m) <>
   C = A * B
   print(C)
@@ -719,7 +719,7 @@ can specify a multiplication between two lower triangular matrices.
 
 Behind the scene, PyLinnea lowers the Python specification to the Linnea
 dialect (see Listing~\ref{lst:endtoend}).  Line 3 and 4 map to the
-initialization and fill operations both for the A and B matrix. Line 8 maps to
+initialization for the A and B matrix. Line 8 maps to
 the \texttt{linnea.equation} operation. 
 
 \begin{listing}[]
@@ -754,9 +754,10 @@ the \texttt{linnea.equation} operation.
 
 \section{Results}
 
-The experiments have been conducted on an Intel Core Xeon
-6238T at 1.90GHz. All results were obtained considering the minimal execution
-time of five independent runs for single-precision (\texttt{f32}) operands.
+The experiments have been conducted on an Intel Core Xeon 6238T at 1.90GHz. All
+results were obtained considering the minimal execution time of five
+independent runs for single-precision (\texttt{f32}) operands as
+in~\cite{49991}.
 
 \iffalse
 \begin{table*}
