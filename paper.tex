@@ -756,11 +756,6 @@ the \texttt{linnea.equation} operation.
 
 \section{Results}
 
-The experiments have been conducted on an Intel Core Xeon 6238T at 1.90GHz. All
-results were obtained considering the minimal execution time of five
-independent runs for single-precision (\texttt{f32}) operands as
-in~\cite{49991}.
-
 \iffalse
 \begin{table*}
 \caption{Multi-level Tactics enables the matrix-chain multiplication optimization at Linalg level by providing a raising path from source code written in C.}
@@ -780,32 +775,23 @@ in~\cite{49991}.
     \footnotesize{800 1100 900 1200 100} &
     \footnotesize{$(((A_1 \times A_2) \times A_3) \times A_4)$} &
     \footnotesize{$(A_1 \times (A_2 \times (A_3 \times A_4)))$} &
-    \footnotesize{1.289 s} &
-    \footnotesize{0.212 s} &
-    \footnotesize{6.08X} \\
-
-    \footnotesize{5} &
-    \footnotesize{1000 2000 900 1500 600 800} &
-    \footnotesize{$((((A_1 \times A_2) \times A_3) \times A_4) \times A_5)$} &
-    \footnotesize{$((A_1 \times ( A_2 \times ( A_3 \times A_4))) \times A_5)$} &
-    \footnotesize{5.850 s} &
-    \footnotesize{2.567 s} &
-    \footnotesize{2.27X} \\
-
-    \footnotesize{6} &
-    \footnotesize{1500 400 2000 2200 600 1400 1000} &
-    \footnotesize{$(((((A_1 \times A_2) \times A_3) \times A_4) \times A_5) \times A_6)$} &
-    \footnotesize{$(A_1 \times ((((A_2 \times A_3) \times A_4) \times A_5) \times A_6))$} &
-    \footnotesize{28.490 s} &
-    \footnotesize{7.762 s} &
-    \footnotesize{3.67X} \\ \bottomrule
+    \footnotesize{2.01 s} &
+    \footnotesize{2.50 s} &
+    \footnotesize{1.24X} \\
 
 \end{tabular}
 }
 \end{center}
-\label{table::param_chain}
-\end{table*}
-\fi 
+\label{table:chain}
+\end{table*} 
+\fi
+
+The experiments have been conducted on an Intel Core . All
+results were obtained considering the minimal execution time of five
+independent runs for single-precision (\texttt{i32}) operands as
+in~\cite{49991}. For a chain of 4 matrices $800 1100 900 1200 100$ with initial parenthesization
+$(((A_1 \times A_2) \times A_3) \times A_4)$ we obtain a $1.24X$ speedup by re-parenthesize as 
+$(A_1 \times (A_2 \times (A_3 \times A_4)))$.
 
 %\section{Related Work}
 
