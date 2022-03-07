@@ -653,7 +653,7 @@ Linnea types.  The \texttt{Equation} represents a ``bag'' of Linnea operations
 that together represent a given mathematical expression. We build a symbolic
 representation of the program by walking each equation starting from the yield
 operation. An equation gets simplified and rematerialized to new low-level
-Linnea IR.  For example, variadic multiplications are  rewritten as binary
+Linnea IR (not shown).  For example, variadic multiplications are  rewritten as binary
 multiplications with an optimal parenthesization. 
 
 \begin{table}
@@ -664,11 +664,11 @@ multiplications with an optimal parenthesization.
     \footnotesize{Init} & \footnotesize{Materialize the algebraic object using a \texttt{memref}} \\
     \rowcolor{aluminium1}
     \footnotesize{Fill} & \footnotesize{Initialize the algebraic object according to its properties}  \\
-    \rowcolor{aluminium1}
     \footnotesize{Equation} & \footnotesize{Represents a linear-algebra equation} \\
-    \footnotesize{Add} & \footnotesize{Variadic addition of different algebraic objects} \\
     \rowcolor{aluminium1}
+    \footnotesize{Add} & \footnotesize{Variadic addition of different algebraic objects} \\ 
     \footnotesize{Yield} & \footnotesize{Return the result of an Equation} \\
+    \rowcolor{aluminium1}
     \footnotesize{Mul} & \footnotesize{Variadic multiplication of different algebraic objects} \\ \bottomrule
 \end{tabular}
 \end{center}
@@ -789,7 +789,7 @@ the \texttt{linnea.equation} operation.
 The experiments have been conducted on an Intel Core i7-10750H. All
 results were obtained considering the minimal execution time of five
 independent runs for single-precision (\texttt{i32}) operands as
-in~\cite{49991}. For a chain of 4 matrices $800 1100 900 1200 100$ with initial parenthesization
+in~\cite{49991}. For a chain of 4 matrices $800 \times 1100 \times 900 \times 1200 \times 100$ with initial parenthesization
 $(((A_1 \times A_2) \times A_3) \times A_4)$ we obtain a $1.24X$ speedup by re-parenthesize as 
 $(A_1 \times (A_2 \times (A_3 \times A_4)))$.
 
