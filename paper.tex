@@ -559,23 +559,18 @@
 
 A significant part of processor time is spent on mathematical algorithms used
 in simulations, machine learning, communication, signal processing, computer
-vision, and other domains.  The mathematics used in these domains may differ
-widely. Still, the actual computations often fall into the realm of linear
-algebra, meaning sequences of computations on matrices and vectors. Optimizing
-these sequences of operation thus becomes crucial.
+vision, and other domains. Of course, the mathematics used in these domains may
+differ widely. Still, the actual computations often fall into the realm of
+linear algebra, meaning sequences of computations on matrices and vectors. 
 
-\marginnote{Note 1: See comments:}
-% Should we switch from the performance argument to the fragmentation argument?
-% Maybe something on this line: The performance of such algorithms relies on
-% the optimization of the linear algebraic computations on matrices and vectors
-% they are expressed with. Research in the area of linear algebraic domain
-% specific languages (DSLs) have demonstrated that expert-level optimizations
-% can be carried out automatically when taking the mathematical semantics of
-% the computation into account (e.g., \cite{barthels:21, spampinato:18,
-% kjolstad:17}). Over time however, the code generation infrastructure
-% supporting such research has grown into a fragmented software ecosystem,
-% where different components that could logically cooperate towards a shared
-% performance goal are in practice unable to interoperate with one another.
+Research in the area of linear algebraic domain-specific languages (DSLs) have
+demonstrated that expert-level optimizations can be carried out automatically
+when taking the mathematical semantics of the computation into account (e.g.,
+\cite{barthels:21, spampinato:18, kjolstad:17}). Over time, however, the code
+generation infrastructure supporting such research has grown into a fragmented
+software ecosystem, where different components that could logically cooperate
+towards a shared performance goal are in practice unable to interoperate with
+one another.
 
 This paper proposes an implementation of a subset of a state-of-the-art
 linear-algebra code generator in MLIR. The linear-algebra code-generator is
