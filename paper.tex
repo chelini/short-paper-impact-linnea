@@ -367,7 +367,7 @@
 \ifx\paperversion\paperversioncameraIEEE
   \title{Full title}
 \else
-  \title[]{Matrix Operations in MLIR}       %% [Short Title] is optional;
+  \title[]{MOM: Matrix Operations in MLIR}       %% [Short Title] is optional;
                                         %% when present, will be used in
                                         %% header instead of Full Title.
   \subtitle{Compiler Support for Linear-algebra Computations in MLIR} %% \subtitle is optional
@@ -570,7 +570,7 @@ Linnea~\cite{10.1145/3446632}.  Specifically, our contributions are:
 %
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
 \includegraphics[width=0.6\columnwidth]{images/Impact2022.drawio.pdf}
-\caption{The PyLinnea compiler for dense-linear algebra.}
+\caption{The MOM compiler for dense-linear algebra.}
 \end{figure}
 
 \begin{itemize}
@@ -694,9 +694,9 @@ engine and encode a set of inference rules such as $lowerTriangular(A)
 \rightarrow upperTriangular(A^T)$. We use the symbolic engine to replace a
 \texttt{TermType} with a concrete type.
 
-\section{PyLinnea Compiler Usage}
+\section{MOM Compiler Usage}
 
-PyLinnea provides users with a convenient Python DSL language to express their
+MOM provides users with a convenient Python DSL language to express their
 computation. It does not require any knowledge about the internal intermediate
 representation or the different compiler passes involved in lowering a Python
 specification to binary. For example, listing~\ref{lst:python} shows how a user
@@ -715,12 +715,12 @@ can specify a multiplication between two lower triangular matrices.
   print(C)
 \end{minted}
 \end{minipage}
-  \caption{PyLinnea specification for a triangular matrix multiplication.}
+  \caption{MOM specification for a triangular matrix multiplication.}
 \label{lst:python}
 \end{center}
 \end{listing}
 
-Behind the scene, PyLinnea lowers the Python specification to the Linnea
+Behind the scene, MOM lowers the Python specification to the Linnea
 dialect (see Listing~\ref{lst:endtoend}).  Line 3 and 4 map to the
 initialization for the A and B matrix. Line 8 maps to
 the \texttt{linnea.equation} operation. 
@@ -798,11 +798,11 @@ $(A_1 \times (A_2 \times (A_3 \times A_4)))$.
 
 \section{Conclusion}
 
-We presented PyLinnea, an end-to-end flow for dense-linear algebra operations
-based on MLIR. Contrary to existing tools, PyLinnea is not limited by the
+We presented MOM, an end-to-end flow for dense-linear algebra operations
+based on MLIR. Contrary to existing tools, MOM is not limited by the
 rigidity of current BLAS and LAPACK libraries. Still, more research is needed
 to develop a proper code generation infrastructure, and more building blocks
-are needed into the MLIR compiler infrastructure to make PyLinnea scalable and
+are needed into the MLIR compiler infrastructure to make MOM scalable and
 flexible. Nevertheless, our research is a small step toward addressing the
 limitation of today's dense-linear algebra optimizers and rethinking their
 optimization flow in a more compiler-structured approach.
