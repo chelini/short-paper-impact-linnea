@@ -580,7 +580,7 @@ Linnea~\cite{10.1145/3446632}.  Specifically, our contributions are:
 %
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
 \includegraphics[width=0.6\columnwidth]{images/Impact2022.drawio.pdf}
-\vspace{-0.5cm}
+\vspace{-0.7cm}
 \caption{The MOM compiler for dense-linear algebra.}
 \end{figure}
 
@@ -608,6 +608,7 @@ lower to LLVM IR and then machine code.
   @\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@]>
 \end{minted}
 \end{minipage}
+\vspace{-0.7em}
 \caption{Linnea attributes attach properties to the underneath algebraic object.}
 \label{lst:attribute}
 \end{center}
@@ -650,7 +651,8 @@ I$.
   !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
 \end{minted}
 \end{minipage}
-  \caption{A type to represent a 5 $\times$ 5 lower-triangular matrix with \texttt{f32} as element type.}
+\vspace{-0.7cm}
+\caption{A type to represent a 5 $\times$ 5 lower-triangular matrix with \texttt{f32} as element type.}
 \label{lst:type}
 \end{center}
 \end{listing}
@@ -726,7 +728,8 @@ can specify a multiplication between two lower triangular matrices.
   print(C)
 \end{minted}
 \end{minipage}
-  \caption{MOM specification for a triangular matrix multiplication.}
+\vspace{-0.7em}
+\caption{MOM specification for a triangular matrix multiplication.}
 \label{lst:python}
 \end{center}
 \end{listing}
@@ -760,7 +763,8 @@ the A and B matrix. Line 6 maps to the \texttt{linnea.equation} operation.
   linnea.print %0 : !linnea.term
 \end{minted}
 \end{minipage}
-  \caption{A Linnea IR representation for a multiplication between two lower triangular matrices.}
+\vspace{-0.7em}
+\caption{A Linnea IR representation for a multiplication between two lower triangular matrices.}
 \label{lst:endtoend}
 \end{center}
 \end{listing}
