@@ -479,24 +479,26 @@
 
 % (http://www.easterbrook.ca/steve/2010/01/how-to-write-a-scientific-abstract-in-six-easy-steps/)
 
-  Modern research in code generators for dense linear algebra 
-  computations has shown the ability to produce optimized code with a 
-  performance which compares and often exceeds the one of state-of-the-art 
-  implementations by domain experts.
+  Modern research in code generators for dense linear algebra computations has
+  shown the ability to produce optimized code with a performance which compares
+  and often exceeds the one of state-of-the-art implementations by domain
+  experts.
   % Dense linear algebra arises in numerical software in computational science
   % and engineering. Often computations in dense linear algebra rely on
   % highly-optimized building blocks from libraries such as BLAS and LAPACK.
   However the underlying infrastructure is often developed in isolation making
-  the interconnection of logically combinable systems complicated if not impossible.
+  the interconnection of logically combinable systems complicated if not
+  impossible.
   % While such libraries provide portable performance for a wide range of
   % computing architectures, they still present limitations in terms of
   % flexibility. 
-  In this paper, we propose to leverage MLIR as a unifying compiler infrastructure 
-  for the optimization of dense linear algebra operations.
-  We propose a new MLIR dialect for expressing linear algebraic computations including
-  matrix properties to enable high-level algorithmic transformations.  The integration of this new dialect in MLIR enables end-to-end
-  compilation of matrix computations via conversion to existing lower-level
-  dialects already provided by the framework.
+  In this paper, we propose to leverage MLIR as a unifying compiler
+  infrastructure for the optimization of dense linear algebra operations.  We
+  propose a new MLIR dialect for expressing linear algebraic computations
+  including matrix properties to enable high-level algorithmic transformations.
+  The integration of this new dialect in MLIR enables end-to-end compilation of
+  matrix computations via conversion to existing lower-level dialects already
+  provided by the framework.
 
 
 %\lipsum[1]
@@ -568,7 +570,7 @@ A significant part of processor time is spent on mathematical algorithms used
 in simulations, machine learning, communication, signal processing, computer
 vision, and other domains. Of course, the mathematics used in these domains may
 differ widely. Still, the actual computations often fall into the realm of
-linear algebra, meaning sequences of computations on matrices and vectors. 
+linear algebra, meaning sequences of computations on matrices and vectors.
 Research in the area of linear algebraic domain-specific languages (DSLs) have
 demonstrated that expert-level optimizations can be carried out automatically
 when taking the mathematical semantics of the computation into account (e.g.,
@@ -579,7 +581,8 @@ towards a shared performance goal are in practice unable to interoperate with
 one another.
 
 This paper proposes an implementation of a subset of the state-of-the-art
-linear algebra code generator Linnea~\cite{barthels:21} in MLIR. Specifically, our contributions are:
+linear algebra code generator Linnea~\cite{barthels:21} in MLIR. Specifically,
+our contributions are:
 
 \begin{figure}
 % Link to figure
@@ -597,30 +600,20 @@ linear algebra code generator Linnea~\cite{barthels:21} in MLIR. Specifically, o
 
 \section{The Linnea Dialect}
 
-We introduce a new linear algebraic dialect in MLIR called Linnea~\cite{barthels:21}.
-Linnea provides MLIR attributes, types, operations, and transformations
-required to make dense computation as first-class citizens in the compiler IR.
-Linnea bridges dense linear algebra computations
-expressed in our Python DSL and the Linalg dialect as shwon in Fig.~\ref{fig:overview}. From Linalg we
-lower to LLVM IR and then machine code.
+We introduce a new linear algebraic dialect in MLIR called
+Linnea~\cite{barthels:21}.  Linnea provides MLIR attributes, types, operations,
+and transformations required to make dense computation as first-class citizens
+in the compiler IR.  Linnea bridges dense linear algebra computations expressed
+in our Python DSL and the Linalg dialect as shwon in Fig.~\ref{fig:overview}.
+From Linalg we lower to LLVM IR and then machine code.
 
 \paragraph{Matrix Attribute}
 
-% \begin{listing}[]
-% \begin{center}
-% \begin{minipage}[]{0.5\textwidth}
-% \begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
-%   @\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@]>
-% \end{minted}
-% \end{minipage}
-% \vspace{-0.7em}
-% \caption{Linnea attributes attach properties to the underneath algebraic object.}
-% \label{lst:attribute}
-% \end{center}
-% \end{listing}
-Inspired the Sparse Tensor Dialect, we introduce \texttt{Matrix} attributes to encode
-non-conflicting, compile-time properties of a matrix. For example, the property that
-a matrix is lower triangular is expressed using the following attribute:
+Inspired the Sparse Tensor Dialect, we introduce \texttt{Matrix} attributes to
+encode non-conflicting, compile-time properties of a matrix. For example, the
+property that a matrix is lower triangular is expressed using the following
+attribute:
+
 \begin{minted}[fontsize=\footnotesize, escapeinside=@@]{cpp}
 
   @\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@]>
@@ -633,18 +626,18 @@ a matrix is lower triangular is expressed using the following attribute:
 % define the underneath algebraic object (e.g., lower or upper triangular).
 % Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
 % lower triangular. 
-During bufferization~\footnote{bufferization materializes
-memref (i.e., malloc) from tensors.}, the underneath algebraic object is
-materialized using a straightforward \texttt{memref} where attributes dictates
-how the memory is filled (i.e., set to zeros the element below the diagonal for
-an upper triangular matrix). In the future, we would like to depart from
-\texttt{memref} and use more appropriate containers.
+During bufferization~\footnote{bufferization materializes memref (i.e., malloc)
+from tensors.}, the underneath algebraic object is materialized using a
+straightforward \texttt{memref} where attributes dictates how the memory is
+filled (i.e., set to zeros the element below the diagonal for an upper
+triangular matrix). In the future, we would like to depart from \texttt{memref}
+and use more appropriate containers.
 
 \paragraph{Types: Matrix, Term and Identity}
 Linnea provides three built-in types: Matrix, Term, and Identity. Matrix
-represents a 2-dimensional tensor type which accepts an attribute that describes a set of
-non-conflicting properties, a static dimension, and an MLIR built-in type that
-describes each stored element's type (i.e., f32). 
+represents a 2-dimensional tensor type which accepts an attribute that
+describes a set of non-conflicting properties, a static dimension, and an MLIR
+built-in type that describes each stored element's type (i.e., f32). 
 % Listing~\ref{lst:type} shows
 % the declaration of a 5 $\times$ 5 lower-triangular matrix. 
 For example, the following is the type declaration of a $5\times5$ lower-triangular matrix:
@@ -833,22 +826,24 @@ $(A_1 \times (A_2 \times (A_3 \times A_4)))$.
 
 We presented MOM, an end-to-end flow for dense linear algebra operations based
 on MLIR. We proposed a new linear algebraic dialect for capturing important
-matrix properties and enabling the expression of domain-expert optimization strategies.
+matrix properties and enabling the expression of domain-expert optimization
+strategies.
 % Contrary to existing tools, PyLinnea is not limited by the rigidity of
-% current BLAS and LAPACK libraries and aims at integrating dense linear algebra
-% optimization strategies within a compiler framework.  
-Future work includes the integration of more properties and algebraic transformations,
-as well as the investigation of suitable extensions of the existing infrastructure to
-support them (e.g., the multiplication of two triangular matrices could map to
-a non-rectangular iteration space currently not supperted by Linalg).
-% Still, more research is needed to develop a proper code generation infrastructure, and more building
-% blocks are needed into the MLIR compiler infrastructure to make PyLinnea
-% scalable and flexible\marginnote{Can we point to some practical issues? Say
-% lack of structure support in Linalg?}. 
+% current BLAS and LAPACK libraries and aims at integrating dense linear
+% algebra optimization strategies within a compiler framework.  
+Future work includes the integration of more properties and algebraic
+transformations, as well as the investigation of suitable extensions of the
+existing infrastructure to support them (e.g., the multiplication of two
+triangular matrices could map to a non-rectangular iteration space currently
+not supperted by Linalg).
+% Still, more research is needed to develop a proper code generation
+% infrastructure, and more building blocks are needed into the MLIR compiler
+% infrastructure to make PyLinnea scalable and flexible\marginnote{Can we point
+% to some practical issues? Say lack of structure support in Linalg?}. 
 
-% Nevertheless, our research is a small step toward addressing the
-% limitation of today's dense linear algebra optimizers and rethinking their
-% optimization flow in a compiler-based approach.
+% Nevertheless, our research is a small step toward addressing the limitation
+% of today's dense linear algebra optimizers and rethinking their optimization
+% flow in a compiler-based approach.
 
 \ifx\paperversion\paperversioncameraIEEE
 \else
