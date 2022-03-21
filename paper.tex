@@ -609,7 +609,7 @@ From Linalg we lower to LLVM IR and then machine code.
 
 \paragraph{Matrix Attribute}
 
-Inspired the Sparse Tensor Dialect, we introduce \texttt{Matrix} attributes to
+Inspired by the Sparse Tensor Dialect, we introduce \texttt{Matrix} attributes to
 encode non-conflicting, compile-time properties of a matrix. For example, the
 property that a matrix is lower triangular is expressed using the following
 attribute:
@@ -705,7 +705,7 @@ multiplications with an optimal parenthesization.
 
 \paragraph{Transformations}
 
-Currently, we limit ourselves to three major transformations: matrix-chain
+Currently, we limit ourselves to three transformations: matrix-chain
 reordering, identity simplification and properties propagation. Matrix chain
 reordering is an algorithmic improvement that minimizes the number of scalar
 multiplications when multiplying a chain of matrices. We implement the
@@ -715,7 +715,7 @@ simplification consists of exploiting the identity matrix to simplify the
 computation. For example, $A \cdot I \rightarrow A$.  Finally, Linnea's IR
 makes it possible to annotate matrices with properties. But, it is also
 essential to understand the properties of intermediate results as the
-computation unfold. Thus we introduce a symbolic engine and encode a set of
+computation unfold, thus we introduce a symbolic engine and encode a set of
 inference rules such as $lowerTriangular(A) \rightarrow upperTriangular(A^T)$.
 We use the symbolic engine to replace a \texttt{TermType} with a concrete type.
 
@@ -724,7 +724,7 @@ We use the symbolic engine to replace a \texttt{TermType} with a concrete type.
 MOM provides users with a convenient Python DSL language to express their
 computation. It does not require any knowledge about the internal intermediate
 representation or the different compiler passes involved in lowering a Python
-specification to binary. For example, listing~\ref{lst:python} shows how a user
+specification to binary. For example, Listing~\ref{lst:python} shows how a user
 can specify a multiplication between two lower triangular matrices. 
 
 \begin{listing}[]
@@ -754,7 +754,7 @@ the A and B matrix. Line 6 maps to the \texttt{linnea.equation} operation.
 \begin{center}
 \begin{minipage}[]{0.5\textwidth}
 \begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
-  // initialize matrix A
+  // initialize matrix A. Default initialize to 1 (%fc = 1).
   @\color{orange3}{%A}@ = linnea.init [5, 5] : 
     !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
   %Af = linnea.fill(%fc, %A) : 
