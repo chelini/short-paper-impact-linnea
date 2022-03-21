@@ -754,17 +754,17 @@ the A and B matrix. Line 6 maps to the \texttt{linnea.equation} operation.
 \begin{center}
 \begin{minipage}[]{0.5\textwidth}
 \begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
-  // initialize matrix A. Default initialize to 1 (%fc = 1).
+  // Initialize matrix A. Default initialize to 1 (%fc = 1).
   @\color{orange3}{%A}@ = linnea.init [5, 5] : 
     !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
   %Af = linnea.fill(%fc, %A) : 
     @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
-  // initialize matrix B
+  // Initialize matrix B.
   %B = linnea.init [5, 5] : 
     !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
   %Bf = linnea.fill(%fc, %B) : 
     @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
-  // multiply the two and print the result
+  // Multiply the two and print the result.
   @\color{orange3}{%0}@ = linnea.equation {
     @\color{orange3}{%1}@ = linnea.mul @\color{orange3}{%Af}@, @\color{orange3}{%Bf}@ :
       !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
