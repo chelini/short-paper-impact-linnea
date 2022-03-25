@@ -702,7 +702,7 @@ reordering, identity simplification and properties propagation. Matrix chain
 reordering is an algorithmic improvement that minimizes the number of scalar
 multiplications when multiplying a chain of matrices. We implement the
 algorithm described in~\cite{cormen2009introduction} and generalize it to
-account for matrix properties as in~\cite{barthels:21}. Identity
+account for matrix properties as in~\cite{barthels:21, 10.1145/3168804}. Identity
 simplification consists of exploiting the identity matrix to simplify the
 computation. For example, $A \cdot I \rightarrow A$.  Finally, Linnea's IR
 makes it possible to annotate matrices with properties. But, it is also
@@ -809,7 +809,7 @@ The experiments have been conducted on an Intel Core i7-10750H. All
 results were obtained considering the minimal execution time of five
 independent runs for single-precision (\texttt{i32}) operands as
 in~\cite{49991}. For a chain of 4 matrices $800 \times 1100 \times 900 \times 1200 \times 100$ with initial parenthesization
-$(((A_1 \times A_2) \times A_3) \times A_4)$ we obtain a $1.24X$ speedup by re-parenthesize as 
+$(((A_1 \times A_2) \times A_3) \times A_4)$ we obtain a $1.24X$ speedup by re-parenthesizing as 
 $(A_1 \times (A_2 \times (A_3 \times A_4)))$.
 
 %\section{Related Work}

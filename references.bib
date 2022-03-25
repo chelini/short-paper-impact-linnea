@@ -33,6 +33,24 @@ address	= {February 27th - March 3rd, 2021, Virtual Conference}
     url     = "https://arxiv.org/pdf/1912.12924.pdf"
 }
 
+@inproceedings{10.1145/3168804,
+author = {Barthels, Henrik and Copik, Marcin and Bientinesi, Paolo},
+title = {The Generalized Matrix Chain Algorithm},
+year = {2018},
+isbn = {9781450356176},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3168804},
+doi = {10.1145/3168804},
+abstract = {In this paper, we present a generalized version of the matrix chain algorithm to generate efficient code for linear algebra problems, a task for which human experts often invest days or even weeks of works. The standard matrix chain problem consists in finding the parenthesization of a matrix product M := A1 A2 ⋯ An that minimizes the number of scalar operations. In practical applications, however, one frequently encounters more complicated expressions, involving transposition, inversion, and matrix properties. Indeed, the computation of such expressions relies on a set of computational kernels that offer functionality well beyond the simple matrix product. The challenge then shifts from finding an optimal parenthesization to finding an optimal mapping of the input expression to the available kernels. Furthermore, it is often the case that a solution based on the minimization of scalar operations does not result in the optimal solution in terms of execution time. In our experiments, the generated code outperforms other libraries and languages on average by a factor of about 9. The motivation for this work comes from the fact that—despite great advances in the development of compilers—the task of mapping linear algebra problems to optimized kernels is still to be done manually. In order to relieve the user from this complex task, new techniques for the compilation of linear algebra expressions have to be developed.},
+booktitle = {Proceedings of the 2018 International Symposium on Code Generation and Optimization},
+pages = {138–148},
+numpages = {11},
+keywords = {matrix chain problem, linear algebra, compiler},
+location = {Vienna, Austria},
+series = {CGO 2018}
+}
+
 @article{10.1145/3446632,
 author = {Barthels, Henrik and Psarras, Christos and Bientinesi, Paolo},
 title = {Linnea: Automatic Generation of Efficient Linear Algebra Programs},
