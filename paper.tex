@@ -619,10 +619,10 @@ attribute:
 % Listing~\ref{lst:attribute} shows an attribute to flag an algebraic type as
 % lower triangular. 
 During bufferization~\footnote{bufferization materializes memref (i.e., malloc)
-from tensors.}, the underneath algebraic object is materialized using a
-straightforward \texttt{memref} where attributes dictates how the memory is
-filled (i.e., set to zeros the element below the diagonal for an upper
-triangular matrix). In the future, we would like to depart from \texttt{memref}
+from tensors.}, the underlying algebraic object is materialized using a
+straightforward \texttt{memref} where attributes dictate how the memory is
+filled (i.e., set to zeros the elements below the diagonal for an upper
+triangular matrix). In the future, we aim to depart from \texttt{memref}
 and use more appropriate containers.
 
 \paragraph{Types: Matrix, Term and Identity}
