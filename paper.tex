@@ -630,23 +630,22 @@ Linnea provides three built-in types: Matrix, Term, and Identity. Matrix
 represents a 2-dimensional tensor type which accepts an attribute that
 describes a set of non-conflicting properties, a static dimension, and an MLIR
 built-in type that describes each stored element's type (i.e., f32). 
-% Listing~\ref{lst:type} shows
-% the declaration of a 5 $\times$ 5 lower-triangular matrix. 
 For example, the following is the type declaration of a $5\times5$ lower-triangular matrix:
 \begin{minted}[fontsize=\footnotesize, framesep=4mm, escapeinside=@@]{cpp}
 
   !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
 
 \end{minted}
-A term type
-represents the result of Linnea \texttt{equationOp}. It is a placeholder type,
-meaning that it will be replaced by a concrete one (i.e., \texttt{MatrixType}).
-In fact, only after optimization and simplification the result of an
-\texttt{equationOp} is known and thus the placeholder types can be swapped with
-a concrete one. Finally, an Identity type represents the identity matrix -- a
-square matrix where all the elements on the diagonal are 1. The Identity type
-enables the expression of mathematical identities such as $A \cdot I = A$ and $I \cdot I =
-I$.
+
+A term type represents the result of Linnea \texttt{equationOp}, which in turn
+models a mathematical equation, composable by the available operations (see
+~\ref{par:operation}). A term is is a placeholder type, meaning that it will be
+replaced by a concrete one (i.e., \texttt{MatrixType}).  In fact, only after
+optimization and simplification the result of an \texttt{equationOp} is known
+and thus the placeholder types can be swapped with a concrete one. Finally, an
+Identity type represents the identity matrix -- a square matrix where all the
+elements on the diagonal are 1. The Identity type enables the expression of
+mathematical identities such as $A \cdot I = A$ and $I \cdot I = I$.
 
 % \begin{listing}[]
 % \begin{center}
@@ -661,12 +660,11 @@ I$.
 % \end{center}
 % \end{listing}
 
-\paragraph{Operations}
-
+\paragraph{Operations} \label{par:operation}
 Table~\ref{table:operations} shows the operations exposed by the Linnea
 dialect. \texttt{Init} and \texttt{Fill} initialize and
 fill an algebraic object, respectively. \texttt{Mul} and \texttt{Add} are
-variadic operations that take as input an arbitrary numbers of Values of
+variadic operations that take as input an arbitrary numbers of MLIR Values~\cite{ValueMLIR} of
 Linnea types.  The \texttt{Equation} represents a ``bag'' of Linnea operations
 that together represent a given mathematical expression. We build a symbolic
 representation of the program by walking each equation starting from the yield
