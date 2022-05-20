@@ -601,7 +601,7 @@ From Linalg we lower to LLVM IR and then machine code.
 
 \paragraph{Matrix Attribute}
 
-Inspired by the Sparse Tensor Dialect, we introduce \texttt{Matrix} attributes to
+Inspired by the Sparse Tensor Dialect~\cite{bik2022compiler}, we introduce \texttt{Matrix} attributes to
 encode non-conflicting, compile-time properties of a matrix. For example, the
 property that a matrix is lower triangular is expressed using the following
 attribute:
@@ -827,7 +827,7 @@ Future work includes the integration of more properties and algebraic
 transformations, as well as the investigation of suitable extensions of the
 existing infrastructure to support them (e.g., the multiplication of two
 triangular matrices could map to a non-rectangular iteration space currently
-not supperted by Linalg).
+not supported by Linalg).
 % Still, more research is needed to develop a proper code generation
 % infrastructure, and more building blocks are needed into the MLIR compiler
 % infrastructure to make PyLinnea scalable and flexible\marginnote{Can we point
