@@ -820,13 +820,15 @@ A_4)))$.
 \section{Conclusion}
 
 We presented MOM, an end-to-end flow for dense linear algebra operations based
-on MLIR. We proposed a new linear algebraic dialect for capturing important
-matrix properties and enabling the expression of domain-expert optimization
-strategies. Future work includes the integration of more properties and
-algebraic transformations, as well as the investigation of suitable extensions
-of the existing infrastructure to support them (e.g., the multiplication of two
-triangular matrices could map to a non-rectangular iteration space currently
-not supported by Linalg).
+on MLIR. Due to the missing algebraic semantics in Linalg, we proposed a new
+linear algebraic dialect for capturing essential matrix properties and enabling
+the expression of domain-expert optimization strategies. For example, it is
+effortless to detect matrix-chain multiplications thanks to Linnea and the
+introduction of variadic multiplications and matrix types.  Future work
+includes the integration of more properties and algebraic transformations, as
+well as the investigation of suitable extensions of the existing infrastructure
+to support them (e.g., the multiplication of two triangular matrices could map
+to a non-rectangular iteration space currently not supported by Linalg).
 
 % Nevertheless, our research is a small step toward addressing the limitation
 % of today's dense linear algebra optimizers and rethinking their optimization
