@@ -1583,7 +1583,7 @@
     usgov,usgovmixed,cagov,cagovmixed,licensedusgovmixed,%
     licensedcagov,licensedcagovmixed,othergov,licensedothergov,%
     iw3c2w3,iw3c2w3g}{%
-  \@printpermissiontrue
+  \@printpermissionfalse
   \@printcopyrighttrue
   \@acmownedtrue
   \ifnum\acm@copyrightmode=0\relax % none
