@@ -629,11 +629,14 @@ triangular matrix). In the future, we aim to depart from \texttt{memref}
 and use more appropriate containers.
 
 \paragraph{Types: Matrix, Term and Identity}
+
 Linnea provides three built-in types: Matrix, Term, and Identity. Matrix
 represents a 2-dimensional tensor type which accepts an attribute that
 describes a set of non-conflicting properties, a static dimension, and an MLIR
-built-in type that describes each stored element's type (i.e., f32). 
-For example, the following is the type declaration of a $5\times5$ lower-triangular matrix:
+built-in type that describes each stored element's type (i.e., f32).  For
+example, the following is the type declaration of a $5\times5$ lower-triangular
+matrix:
+
 \begin{minted}[fontsize=\footnotesize, framesep=4mm, escapeinside=@@]{cpp}
 
   !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
@@ -806,33 +809,24 @@ the A and B matrix. Line 6 maps to the \texttt{linnea.equation} operation.
 \end{table*} 
 \fi
 
-The experiments have been conducted on an Intel Core i7-10750H. All
-results were obtained considering the minimal execution time of five
-independent runs for single-precision (\texttt{i32}) operands as
-in~\cite{49991}. For a chain of 4 matrices $800 \times 1100 \times 900 \times 1200 \times 100$ with initial parenthesization
-$(((A_1 \times A_2) \times A_3) \times A_4)$ we obtain a $1.24X$ speedup by re-parenthesizing as 
-$(A_1 \times (A_2 \times (A_3 \times A_4)))$.
-
-%\section{Related Work}
+The experiments have been conducted on an Intel Core i7-10750H. All results
+were obtained considering the minimal execution time of five independent runs
+for single-precision (\texttt{i32}) operands as in~\cite{49991}. For a chain of
+4 matrices $800 \times 1100 \times 900 \times 1200 \times 100$ with initial
+parenthesization $(((A_1 \times A_2) \times A_3) \times A_4)$ we obtain a
+$1.24X$ speedup by re-parenthesizing as $(A_1 \times (A_2 \times (A_3 \times
+A_4)))$.
 
 \section{Conclusion}
 
 We presented MOM, an end-to-end flow for dense linear algebra operations based
 on MLIR. We proposed a new linear algebraic dialect for capturing important
 matrix properties and enabling the expression of domain-expert optimization
-strategies.
-% Contrary to existing tools, PyLinnea is not limited by the rigidity of
-% current BLAS and LAPACK libraries and aims at integrating dense linear
-% algebra optimization strategies within a compiler framework.  
-Future work includes the integration of more properties and algebraic
-transformations, as well as the investigation of suitable extensions of the
-existing infrastructure to support them (e.g., the multiplication of two
+strategies. Future work includes the integration of more properties and
+algebraic transformations, as well as the investigation of suitable extensions
+of the existing infrastructure to support them (e.g., the multiplication of two
 triangular matrices could map to a non-rectangular iteration space currently
 not supported by Linalg).
-% Still, more research is needed to develop a proper code generation
-% infrastructure, and more building blocks are needed into the MLIR compiler
-% infrastructure to make PyLinnea scalable and flexible\marginnote{Can we point
-% to some practical issues? Say lack of structure support in Linalg?}. 
 
 % Nevertheless, our research is a small step toward addressing the limitation
 % of today's dense linear algebra optimizers and rethinking their optimization
