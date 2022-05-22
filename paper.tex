@@ -598,9 +598,11 @@ and transformations required to make dense computations as first-class citizens
 in the compiler IR. Linnea bridges dense linear algebra computations expressed
 in our Python DSL and the Linalg dialect, as shown in Fig.~\ref{fig:overview}.
 From Linalg, we lower to LLVM IR and then machine code. In
-Fig.~\ref{fig:overview} with MOM, we refer to the entire compilation stack
-(i.e., Python DSL and MLIR dialect), while Linnea is the name of the MLIR
-dialect only. 
+Fig.~\ref{fig:overview} with
+MOM~\footnote{https://github.com/Algebraic-Programming/MLIR-Linnea}, we refer
+to the entire compilation stack (i.e., Python DSL and MLIR dialect), while
+Linnea is the name of the MLIR dialect only. Linnea comes with custom
+attributes, types and operations described next. 
 
 \paragraph{Matrix Attribute}
 
@@ -645,7 +647,7 @@ matrix:
 
 A term type represents the result of Linnea \texttt{equationOp}, which in turn
 models a mathematical equation, composable by the available operations (see
-~\ref{par:operation}). A term is is a placeholder type, meaning that it will be
+next paragraph). A term is is a placeholder type, meaning that it will be
 replaced by a concrete one (i.e., \texttt{MatrixType}).  In fact, only after
 optimization and simplification the result of an \texttt{equationOp} is known
 and thus the placeholder types can be swapped with a concrete one. Finally, an
@@ -670,8 +672,8 @@ mathematical identities such as $A \cdot I = A$ and $I \cdot I = I$.
 Table~\ref{table:operations} shows the operations exposed by the Linnea
 dialect. \texttt{Init} and \texttt{Fill} initialize and
 fill an algebraic object, respectively. \texttt{Mul} and \texttt{Add} are
-variadic operations that take as input an arbitrary numbers of MLIR Values~\cite{ValueMLIR} of
-Linnea types.  The \texttt{Equation} represents a ``bag'' of Linnea operations
+variadic operations that take as input an arbitrary numbers of MLIR Values of
+Linnea types~\cite{ValueMLIR}.  The \texttt{Equation} represents a ``bag'' of Linnea operations
 that together represent a given mathematical expression. We build a symbolic
 representation of the program by walking each equation starting from the yield
 operation. An equation gets simplified and rematerialized to new low-level
