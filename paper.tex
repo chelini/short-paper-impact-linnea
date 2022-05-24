@@ -23,7 +23,7 @@
 \ifx\paperversion\paperversioncameraIEEE
   \documentclass[conference]{IEEEtran}
 \else
-  \documentclass[sigplan]{acmart}
+  \documentclass[nonacm, sigplan]{acmart}
 \fi
 
 \def\acmversionanonymous{anonymous}
@@ -367,7 +367,7 @@
 \ifx\paperversion\paperversioncameraIEEE
   \title{Full title}
 \else
-  \title[]{MOM: Matrix Operations in MLIR}       %% [Short Title] is optional;
+  \title[MOM: Matrix Operations in MLIR]{MOM: Matrix Operations in MLIR}       %% [Short Title] is optional;
                                         %% when present, will be used in
                                         %% header instead of Full Title.
   \subtitle{Towards Compiler Support for Linear Algebra Computations in MLIR} %% \subtitle is optional
@@ -592,16 +592,15 @@ our contributions are:
 
 \section{The Linnea Dialect}
 
-We introduce a new linear algebraic dialect in MLIR called
-Linnea after the homonymous code generator~\cite{barthels:21}. Linnea provides MLIR attributes, types, operations,
-and transformations required to make dense computations as first-class citizens
-in the compiler IR. Linnea bridges dense linear algebra computations expressed
-in our Python DSL and the Linalg dialect, as shown in Fig.~\ref{fig:overview}.
-From Linalg, we lower to LLVM IR and then machine code. In
-Fig.~\ref{fig:overview} with
-MOM~\footnote{https://github.com/Algebraic-Programming/MLIR-Linnea}, we refer
-to the entire compilation stack (i.e., Python DSL and MLIR dialect), while
-Linnea is the name of the MLIR dialect only. Linnea comes with custom
+We introduce a new linear algebraic dialect in MLIR called Linnea after the
+homonymous code generator~\cite{barthels:21}. Linnea provides MLIR attributes,
+types, operations, and transformations required to make dense computations as
+first-class citizens in the compiler IR. In Fig.~\ref{fig:overview} we show an
+overview of the Matrix Operations in MLIR
+(MOM~\footnote{https://github.com/Algebraic-Programming/MLIR-Linnea}) compiler
+framework. Linnea bridges dense linear algebra computations expressed in our
+Python DSL and the Linalg dialect, as shown in Fig.~\ref{fig:overview}.  From
+Linalg, we lower to LLVM IR and then machine code. Linnea comes with custom
 attributes, types and operations described next. 
 
 \paragraph{Matrix Attribute}
