@@ -821,7 +821,7 @@ A_4)))$.
 
 \section{Conclusion}
 
-We presented MOM, an end-to-end flow for dense linear algebra operations based
+We presented MOM, an end-to-end compiler for dense linear algebra operations based
 on MLIR. Due to the missing algebraic semantics in Linalg, we proposed a new
 linear algebraic dialect for capturing essential matrix properties and enabling
 the expression of domain-expert optimization strategies. For example, it is
@@ -839,7 +839,7 @@ to a non-rectangular iteration space currently not supported by Linalg).
 \ifx\paperversion\paperversioncameraIEEE
 \else
 %% Acknowledgments
-\begin{acks}                            %% acks environment is optional
+%\begin{acks}                            %% acks environment is optional
                                         %% contents suppressed with 'anonymous'
   %% Commands \grantsponsor{<sponsorID>}{<name>}{<url>} and
   %% \grantnum[<url>]{<sponsorID>}{<number>} should be used to
@@ -853,7 +853,7 @@ to a non-rectangular iteration space currently not supported by Linalg).
   %conclusions or recommendations expressed in this material are those
   %of the author and do not necessarily reflect the views of the
   %National Science Foundation.
-\end{acks}
+%\end{acks}
 \fi
 
 %% Bibliography
