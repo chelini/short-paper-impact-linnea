@@ -446,7 +446,7 @@
 
  \author{Marcin	Copik}
   \affiliation{
-    \institution{ETHZ}
+    \institution{ETH Zurich}
     \country{Switzerland}
   }
   \email{marcin.copik@inf.ethz.ch}
@@ -675,7 +675,7 @@ variadic operations that take as input an arbitrary numbers of MLIR Values of
 Linnea types~\cite{ValueMLIR}.  The \texttt{Equation} represents a ``bag'' of Linnea operations
 that together represent a given mathematical expression. We build a symbolic
 representation of the program by walking each equation starting from the yield
-operation. An equation gets simplified and rematerialized to new low-level
+operation. An equation is simplified and rematerialized to new low-level
 Linnea IR (not shown).  For example, variadic multiplications are  rewritten as binary
 multiplications with an optimal parenthesization. 
 
