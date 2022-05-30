@@ -570,7 +570,12 @@ when taking the mathematical semantics of the computation into account (e.g.,
 generation infrastructure supporting such research has grown into a fragmented
 software ecosystem, where different components that could logically cooperate
 towards a shared performance goal are in practice unable to interoperate with
-one another.
+one another. Thanks to the new MLIR~\cite{49988} compiler infrastructure is now
+possible to de-fragmentize our software ecosystem by enabling domain-specific
+compilation directly in a general-purpose compiler. However, after careful
+evaluation of the available dialects in MLIR, none was able to capture
+linear-algebra semantics, including Linalg~\cite{vasilache2022composable}; therefore, we developed our
+dialect. 
 
 This paper proposes an implementation of a subset of the state-of-the-art
 linear algebra code generator Linnea~\cite{barthels:21} in MLIR. Specifically,
