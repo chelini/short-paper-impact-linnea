@@ -783,6 +783,43 @@ the A and B matrix. Line 6 maps to the \texttt{linnea.equation} operation.
 \end{center}
 \end{listing}
 
+\paragraph{Lowering to Linalg}
+The conversion to Linalg is relatively straightforward; each operation in the
+Linnea dialect maps one-to-one with available operations in Linalg. For
+example, Listing~\ref{lst:endtoendlinalg} shows the Linalg operations
+materialized after the conversion of Listing~\ref{lst:endtoend}.
+
+\begin{listing}[]
+\begin{center}
+\begin{minipage}[]{0.5\textwidth}
+\begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
+  // Initialize matrix A. Default initialize to 1 (%fc = 1).
+  @\color{orange3}{%A}@ = linnea.init [5, 5] : 
+    !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  %Af = linnea.fill(%fc, %A) : 
+    @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  // Initialize matrix B.
+  %B = linnea.init [5, 5] : 
+    !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  %Bf = linnea.fill(%fc, %B) : 
+    @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  // Multiply the two and print the result.
+  @\color{orange3}{%0}@ = linnea.equation {
+    @\color{orange3}{%1}@ = linnea.mul @\color{orange3}{%Af}@, @\color{orange3}{%Bf}@ :
+      !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+      !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]> 
+      -> !linnea.term
+    linnea.yield @\color{orange3}{%1}@ : !linnea.term
+  }
+  linnea.print %0 : !linnea.term
+\end{minted}
+\end{minipage}
+\vspace{-0.7em}
+\caption{A Linnea IR representation for a multiplication between two lower triangular matrices.}
+\label{lst:endtoendlinalg}
+\end{center}
+\end{listing}
+
 \section{Results}
 
 \iffalse
