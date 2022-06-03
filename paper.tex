@@ -794,28 +794,25 @@ materialized after the conversion of Listing~\ref{lst:endtoend}.
 \begin{minipage}[]{0.5\textwidth}
 \begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
   // Initialize matrix A. Default initialize to 1 (%fc = 1).
-  @\color{orange3}{%A}@ = linnea.init [5, 5] : 
-    !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
-  %Af = linnea.fill(%fc, %A) : 
-    @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
+  %A = linalg.init-tensor [5, 5] 
+    : tensor<5x5xf32, #linnea.property<['lowerTri']>> 
+  %Af = linalg.fill ins(%fc : f32) 
+    outs(%A : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
   // Initialize matrix B.
-  %B = linnea.init [5, 5] : 
-    !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
-  %Bf = linnea.fill(%fc, %B) : 
-    @\color{red}{f32}@, !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
-  // Multiply the two and print the result.
-  @\color{orange3}{%0}@ = linnea.equation {
-    @\color{orange3}{%1}@ = linnea.mul @\color{orange3}{%Af}@, @\color{orange3}{%Bf}@ :
-      !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]>
-      !linnea.matrix@\color{orange3}{#linnea.property}@<[@\color{skyblue3}{'lowerTri'}@, [5, 5], @\color{red}{f32}@]> 
-      -> !linnea.term
-    linnea.yield @\color{orange3}{%1}@ : !linnea.term
-  }
-  linnea.print %0 : !linnea.term
+  %B = linalg.init-tensor [5, 5] 
+    : tensor<5x5xf32, #linnea.property<['lowerTri']>>
+  %Bf = linalg.fill ins(%fc : f32) 
+    outs(%B : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
+  %C = linalg.init-tensor [5, 5] 
+    : tensor<5x5xf32, #linnea.property<['lowerTri']>>
+  linalg.matmul ins(%Af : tensor<5x5xf32, #linnea.property<['lowerTri']>>
+                    %Bf : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
+    outs(%C : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
+  linnea.print %C : tensor<5x5xf32, #linnea.property<['lowerTri']>>
 \end{minted}
 \end{minipage}
 \vspace{-0.7em}
-\caption{A Linnea IR representation for a multiplication between two lower triangular matrices.}
+\caption{A Lianlg IR representation for Listing~\ref{lst:endtoend}.}
 \label{lst:endtoendlinalg}
 \end{center}
 \end{listing}
