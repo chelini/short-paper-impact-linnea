@@ -795,20 +795,20 @@ materialized after the conversion of Listing~\ref{lst:endtoend}.
 \begin{minted}[fontsize=\scriptsize, escapeinside=@@]{cpp}
   // Initialize matrix A. Default initialize to 1 (%fc = 1).
   %A = linalg.init-tensor [5, 5] 
-    : tensor<5x5xf32, #linnea.property<['lowerTri']>> 
+    : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>> 
   %Af = linalg.fill ins(%fc : f32) 
-    outs(%A : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
+    outs(%A : tensor<5x5xf32, @\color{orange3}{#linnea.property}@<['lowerTri']>>)
   // Initialize matrix B.
   %B = linalg.init-tensor [5, 5] 
-    : tensor<5x5xf32, #linnea.property<['lowerTri']>>
-  %Bf = linalg.fill ins(%fc : f32) 
-    outs(%B : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
+    : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>
+  %Bf = linalg.fill ins(%fc : @\color{red}{f32}@) 
+    outs(%B : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>)
   %C = linalg.init-tensor [5, 5] 
-    : tensor<5x5xf32, #linnea.property<['lowerTri']>>
-  linalg.matmul ins(%Af : tensor<5x5xf32, #linnea.property<['lowerTri']>>
-                    %Bf : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
-    outs(%C : tensor<5x5xf32, #linnea.property<['lowerTri']>>)
-  linnea.print %C : tensor<5x5xf32, #linnea.property<['lowerTri']>>
+    : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>
+  linalg.matmul ins(%Af : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>
+                    %Bf : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>)
+    outs(%C : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>)
+  linnea.print %C : tensor<5x5x@\color{red}{f32}@, @\color{orange3}{#linnea.property}@<['lowerTri']>>
 \end{minted}
 \end{minipage}
 \vspace{-0.7em}
